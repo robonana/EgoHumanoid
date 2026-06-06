@@ -494,9 +494,12 @@ uv run python scripts/compute_norm_states_ultra_fast.py --config-name=norm_compu
 
 ### Sample Dataset
 
-A small example dataset (~100 MB, collected on Unitree G1) is hosted on Hugging Face for quickly validating the training pipeline or running a smoke-test fine-tune:
+A sample dataset is hosted on Hugging Face for quickly validating the training pipeline or running a smoke-test fine-tune:
 
-🤗 **[OpenDriveLab/EgoHumanoid](https://huggingface.co/datasets/OpenDriveLab/EgoHumanoid)**
+| Subset | Description | Link |
+| --- | --- | --- |
+| Robot | Teleoperation demonstrations (Unitree G1) | [example/robot](https://huggingface.co/datasets/OpenDriveLab/EgoHumanoid/tree/main/example/robot) |
+| Human | Robot-free egocentric demonstrations (PICO VR + ZED) | [example/human](https://huggingface.co/datasets/OpenDriveLab/EgoHumanoid/tree/main/example/human) |
 
 ```bash
 # Download the sample dataset
