@@ -42,6 +42,7 @@ Extensive real-world experiments demonstrate that incorporating robot-free egoce
   - [Convert to LeRobot Format](#convert-to-lerobot-format)
 - [🤖 Model Training](#model-training)
   - [Compute Normalization Statistics](#compute-normalization-statistics)
+  - [Sample Dataset](#sample-dataset)
   - [Run Training](#run-training)
 - [🚀 Deployment](#deployment)
   - [Policy Server](#policy-server)
@@ -489,6 +490,20 @@ Before training, compute normalization statistics for your dataset:
 
 ```bash
 uv run python scripts/compute_norm_states_ultra_fast.py --config-name=norm_compute
+```
+
+### Sample Dataset
+
+A sample dataset is hosted on Hugging Face for quickly validating the training pipeline or running a smoke-test fine-tune:
+
+| Subset | Description | Link |
+| --- | --- | --- |
+| Robot | Teleoperation demonstrations (Unitree G1) | [example/robot](https://huggingface.co/datasets/OpenDriveLab/EgoHumanoid/tree/main/example/robot) |
+| Human | Robot-free egocentric demonstrations (PICO VR + ZED) | [example/human](https://huggingface.co/datasets/OpenDriveLab/EgoHumanoid/tree/main/example/human) |
+
+```bash
+# Download the sample dataset
+hf download OpenDriveLab/EgoHumanoid --repo-type=dataset --local-dir ./data
 ```
 
 ### Run Training
