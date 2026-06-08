@@ -29,8 +29,14 @@ from tqdm import tqdm
 from typing import Dict, List, Tuple, Optional
 import warnings
 import argparse
+import threading
 import pyzed.sl as sl
 from concurrent.futures import ThreadPoolExecutor
+
+# ZED SDK does not support multiple simultaneous SVO readers from the same
+# physical camera. Serialize all zed.open() / grab / retrieve_image / close
+# calls across threads so only one ZED camera is active at a time.
+_ZED_LOCK = threading.Lock()
 
 
 def _process_single_episode_wrapper(merger, hdf5_file, svo2_file, output_file, episode_name):
@@ -494,7 +500,11 @@ class CameraRobotMerger:
     
     def _read_svo2_file(self, svo2_path: Path) -> Optional[Dict]:
         """Read all images and timestamps from svo2 file"""
-        
+        with _ZED_LOCK:
+            return self._read_svo2_file_locked(svo2_path)
+
+    def _read_svo2_file_locked(self, svo2_path: Path) -> Optional[Dict]:
+        """Actual SVO2 reader — must only run one at a time (see _ZED_LOCK)."""
         # Create ZED camera object
         zed = sl.Camera()
         
@@ -526,7 +536,7 @@ class CameraRobotMerger:
                 return None
         
         # Getframe count
-        nb_frame = zed.get_svo_number_of_frame()
+        nb_frame = zed.get_svo_number_of_frames()
         
         # Store data
         timestamps_ns = []

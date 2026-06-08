@@ -499,7 +499,7 @@ Examples:
     parser.add_argument(
         '--dry-run',
         action='store_true',
-        help='Preview mode, only print operations, don't perform actual copying'
+        help="Preview mode, only print operations, don't perform actual copying"
     )
     
     args = parser.parse_args()

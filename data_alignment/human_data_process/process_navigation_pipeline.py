@@ -293,8 +293,8 @@ def integrate_nav_cmd(cmd: np.ndarray, dt: float, x0: float, y0: float, yaw0: fl
 
 
 def to_frame0_xy(xy: np.ndarray, p0_xy: np.ndarray, h0_xy: np.ndarray) -> np.ndarray:
-    “””
-    Convert world frame xy point list to “first frame coordinate frame”:
+    """
+    Convert world frame xy point list to "first frame coordinate frame":
       p' = R0^T (p - p0)
     where R0's x-axis is h0_xy, y-axis is its left normal.
     """
@@ -430,7 +430,7 @@ def main():
         # 2) Generate velocity commands
         nav_cmd = compute_navigation_command(positions_xyz, rotation_xy, dt=dt)
 
-        # 3) Integrate to reconstruct trajectory (first integrate in world frame, then uniformly convert to “first frame coordinate frame” for comparison plotting)
+        # 3) Integrate to reconstruct trajectory (first integrate in world frame, then uniformly convert to "first frame coordinate frame" for comparison plotting)
         x0, y0 = float(positions_xyz[0, 0]), float(positions_xyz[0, 1])
         yaw0 = float(np.arctan2(rotation_xy[0, 1], rotation_xy[0, 0]))
         x_int_w, y_int_w, _yaw_int = integrate_nav_cmd(nav_cmd, dt=dt, x0=x0, y0=y0, yaw0=yaw0)

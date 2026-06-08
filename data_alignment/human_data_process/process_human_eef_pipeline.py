@@ -17,7 +17,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
-from concurrent.futures import processPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 import h5py
@@ -27,7 +27,7 @@ from scipy.spatial.transform import Rotation as R
 
 
 # Keypoint indices (second dimension of body_pose)
-BASE_IDX = 3          # body base coordinate frame
+BASE_IDX = 0          # body base coordinate frame (pelvis)
 LEFT_HAND_IDX = 22    # left hand
 RIGHT_HAND_IDX = 23   # right hand
 
@@ -712,7 +712,7 @@ def main():
     num_ok, num_fail = 0, 0
     
     # Parallel processing
-    with processPoolExecutor(max_workers=args.workers) as executor:
+    with ProcessPoolExecutor(max_workers=args.workers) as executor:
         futures = {executor.submit(_process_one_wrapper, t): t[0].name for t in tasks}
         
         for future in as_completed(futures):

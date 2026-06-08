@@ -25,7 +25,7 @@ from pathlib import Path
 from scipy.optimize import minimize
 from tqdm import tqdm
 import shutil
-from concurrent.futures import processPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, as_completed
 import multiprocessing
 
 
@@ -1089,7 +1089,7 @@ def main():
     if args.num_workers > 1 and len(tasks) > 1:
         # Multiprocess processing
         print(f"🚀 use {args.num_workers} processes for parallel processing {len(tasks)} files")
-        with processPoolExecutor(max_workers=args.num_workers) as executor:
+        with ProcessPoolExecutor(max_workers=args.num_workers) as executor:
             futures = {executor.submit(_process_single_file, task): task[3] for task in tasks}
             
             with tqdm(total=len(futures), desc="processing") as pbar:
